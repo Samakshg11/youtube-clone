@@ -19,10 +19,10 @@ export default function Navbar() {
       <div className="glass-panel mx-auto flex w-full max-w-[1600px] items-center gap-2 rounded-2xl px-3 py-2 sm:gap-4 sm:px-4">
         <Link to="/" className="group flex items-center gap-2 shrink-0">
           <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-[#ff4a3d] to-[#ff7d2b] text-lg font-black text-white transition group-hover:scale-105">
-            Y
+            M
           </div>
           <span className="hidden text-lg font-semibold tracking-tight title-gradient sm:block">
-            YouTube Clone
+            MeTube
           </span>
         </Link>
 
