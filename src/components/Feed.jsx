@@ -35,7 +35,7 @@ export default function Feed() {
         );
         setPageToken(data.nextPageToken || "");
       } catch (err) {
-        setError(err.message || "Unable to load videos right now.");
+        setError(err.message || "Unable to load videos");
       } finally {
         setLoading(false);
         setLoadingMore(false);
