@@ -37,7 +37,7 @@ export default function Feed() {
       } catch (err) {
         setError(err.message || "Unable to load video");
       } finally {
-        setLoading(false);
+        setLoading(true);
         setLoadingMore(false);
       }
     },
