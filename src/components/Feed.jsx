@@ -53,7 +53,19 @@ export default function Feed() {
       return;
     }
 
-    con
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const first = entries[0];
+        if (first.isIntersecting) {
+          fetchVideos(pageToken);
+        }
+      },
+      { rootMargin: "320px" }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, [fetchVideos, loading, loadingMore, pageToken]);
 
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 pb-8 text-white sm:px-4">
