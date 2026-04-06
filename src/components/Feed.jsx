@@ -68,12 +68,7 @@ export default function Feed() {
   }, [fetchVideos, loading, loadingMore, pageToken]);
 
   return (
-    <div className="min-h-[calc(100vh-74px)] px-3 pb-8 text-white sm:px-4">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col md:flex-row">
-        <SideBar
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
+    
 
         <main className="flex-1 px-1 pb-6 sm:px-2 md:px-6">
           <div className="soft-panel hero-ring mb-5 overflow-hidden rounded-[32px] p-5 sm:p-7">
