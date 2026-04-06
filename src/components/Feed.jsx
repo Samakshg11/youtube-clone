@@ -41,7 +41,7 @@ export default function Feed() {
         setLoadingMore(false);
       }
     },
-    [selectedCategory]
+  
   );
 
   useEffect(() => {
