@@ -33,16 +33,25 @@ export default function Navbar() {
 
         <form
           onSubmit={handleSubmit}
+          role="search"
+          aria-label="Search videos"
           className="edge-glow flex w-full items-center overflow-hidden rounded-full border border-white/10 bg-black/35"
         >
+          <label htmlFor="navbar-search" className="sr-only">
+            Search videos, creators, and topics
+          </label>
           <input
+            id="navbar-search"
             className="w-full bg-transparent px-4 py-3 text-sm text-white outline-none placeholder:text-zinc-400"
             placeholder="Search videos, creators, and topics"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            autoComplete="off"
+            enterKeyHint="search"
           />
           <button
             type="submit"
+            aria-label="Run search"
             className="border-l border-white/15 bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110"
           >
             Search
