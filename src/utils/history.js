@@ -1,8 +1,22 @@
 const HISTORY_KEY = "yt_history";
 const HISTORY_LIMIT = 50;
 
+function readHistory() {
+  try {
+    const storedValue = localStorage.getItem(HISTORY_KEY);
+    if (!storedValue) {
+      return [];
+    }
+
+    const parsed = JSON.parse(storedValue);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
 export function saveToHistory(video) {
-  const history = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  const history = readHistory();
   if (!video?.id) {
     return;
   }
@@ -14,7 +28,7 @@ export function saveToHistory(video) {
 }
 
 export function getHistory() {
-  return JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
+  return readHistory();
 }
 
 export function clearHistory() {
