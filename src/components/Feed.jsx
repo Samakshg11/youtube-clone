@@ -12,10 +12,16 @@ export default function Feed() {
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Trending");
   const sentinelRef = useRef(null);
+  const inflightTokenRef = useRef("");
 
   const fetchVideos = useCallback(
     async (token = "") => {
       const isFirstPage = !token;
+      if (!isFirstPage && inflightTokenRef.current === token) {
+        return;
+      }
+
+      inflightTokenRef.current = token;
       if (isFirstPage) {
         setLoading(true);
       } else {
@@ -37,6 +43,7 @@ export default function Feed() {
       } catch (err) {
         setError(err.message || "Unable to load video");
       } finally {
+        inflightTokenRef.current = "";
         setLoading(false);
         setLoadingMore(false);
       }
