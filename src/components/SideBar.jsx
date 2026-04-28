@@ -19,13 +19,15 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
       <aside className="hidden md:block w-64 shrink-0 px-4 py-2">
         <div className="soft-panel sticky top-28 rounded-[30px] p-4">
           <p className="section-label px-3 pb-4">Explore</p>
-          <div className="space-y-2">
+          <nav aria-label="Video categories" className="space-y-2">
             {categories.map((cat) => {
               const isActive = selectedCategory === cat.id;
               return (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
+                  type="button"
+                  aria-pressed={isActive}
                   className={`w-full rounded-2xl px-3 py-3 text-left transition ${
                     isActive
                       ? "bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] text-white shadow-[0_14px_30px_rgba(255,90,79,0.26)]"
@@ -43,18 +45,20 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
                 </button>
               );
             })}
-          </div>
+          </nav>
         </div>
       </aside>
 
       <div className="md:hidden px-3 pb-3">
-        <div className="no-scrollbar flex gap-2 overflow-x-auto">
+        <nav aria-label="Video categories" className="no-scrollbar flex gap-2 overflow-x-auto">
           {categories.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
+                type="button"
+                aria-pressed={isActive}
                 className={`rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition ${
                   isActive
                     ? "border-[#ff6f49] bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] text-white shadow-[0_10px_24px_rgba(255,90,79,0.28)]"
@@ -65,7 +69,7 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
               </button>
             );
           })}
-        </div>
+        </nav>
       </div>
     </>
   );
