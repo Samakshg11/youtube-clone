@@ -4,12 +4,20 @@ import VideoCard from "./VideoCard";
 import Shimmer from "./Shimmer";
 import { searchVideos } from "../utils/youtube";
 
+function safeDecodeSearchTerm(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+}
+
 export default function SearchFeed() {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { searchTerm = "" } = useParams();
-  const decodedSearchTerm = decodeURIComponent(searchTerm);
+  const decodedSearchTerm = safeDecodeSearchTerm(searchTerm);
 
   useEffect(() => {
     async function fetchSearchResults() {
