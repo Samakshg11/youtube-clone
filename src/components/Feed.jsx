@@ -125,8 +125,15 @@ export default function Feed() {
           </div>
 
           {error && (
-            <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200">
-              {error}
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200">
+              <span>{error}</span>
+              <button
+                type="button"
+                onClick={() => fetchVideos()}
+                className="rounded-full border border-red-200/50 bg-red-400/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-red-100 transition hover:bg-red-300/30"
+              >
+                Retry
+              </button>
             </div>
           )}
 
