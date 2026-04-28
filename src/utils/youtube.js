@@ -41,7 +41,17 @@ export async function searchVideos({ query, pageToken = "", maxResults = 12 }) {
 
   const response = await fetch(`${API_BASE_URL}/search?${params.toString()}`);
   if (!response.ok) {
-    throw new Error(`YouTube request failed: ${response.status}`);
+    let apiMessage = "";
+    try {
+      const errorBody = await response.json();
+      apiMessage = errorBody?.error?.message || "";
+    } catch {
+      apiMessage = "";
+    }
+
+    throw new Error(
+      apiMessage || `YouTube request failed: ${response.status}`
+    );
   }
 
   const data = await response.json();
@@ -61,7 +71,17 @@ export async function getVideoById(id) {
 
   const response = await fetch(`${API_BASE_URL}/videos?${params.toString()}`);
   if (!response.ok) {
-    throw new Error(`YouTube request failed: ${response.status}`);
+    let apiMessage = "";
+    try {
+      const errorBody = await response.json();
+      apiMessage = errorBody?.error?.message || "";
+    } catch {
+      apiMessage = "";
+    }
+
+    throw new Error(
+      apiMessage || `YouTube request failed: ${response.status}`
+    );
   }
 
   const data = await response.json();
