@@ -47,6 +47,10 @@ export default function SearchFeed() {
 
     if (decodedSearchTerm) {
       fetchSearchResults();
+    } else {
+      setVideos([]);
+      setLoading(false);
+      setError("");
     }
 
     return () => {
@@ -67,6 +71,15 @@ export default function SearchFeed() {
             and channels without the page feeling crowded.
           </p>
         </section>
+
+        {!decodedSearchTerm && (
+          <div className="soft-panel mb-5 rounded-[28px] p-8 text-center">
+            <p className="text-lg font-semibold text-white">Start with a search</p>
+            <p className="mt-2 text-sm text-zinc-400">
+              Use the top search bar to find videos by topic, channel, or keyword.
+            </p>
+          </div>
+        )}
 
         {error && (
           <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200">
