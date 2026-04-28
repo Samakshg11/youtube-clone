@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
+import { formatPublishedDate } from "../utils/formatters";
 
 export default function VideoCard({ video }) {
-  const publishDate = video.publishedAt
-    ? new Date(video.publishedAt).toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "";
+  const publishDate = formatPublishedDate(video.publishedAt);
 
   return (
     <Link to={`/watch/${video.id}`} className="group block">
