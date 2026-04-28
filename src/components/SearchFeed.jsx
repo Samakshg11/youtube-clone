@@ -20,6 +20,8 @@ export default function SearchFeed() {
   const decodedSearchTerm = safeDecodeSearchTerm(searchTerm);
 
   useEffect(() => {
+    let ignore = false;
+
     async function fetchSearchResults() {
       setLoading(true);
       setError("");
@@ -29,17 +31,27 @@ export default function SearchFeed() {
           maxResults: 24,
         });
 
-        setVideos(data.videos);
+        if (!ignore) {
+          setVideos(data.videos);
+        }
       } catch (error) {
-        setError(error.message || "Failed to load search results.");
+        if (!ignore) {
+          setError(error.message || "Failed to load search results.");
+        }
       } finally {
-        setLoading(false);
+        if (!ignore) {
+          setLoading(false);
+        }
       }
     }
 
     if (decodedSearchTerm) {
       fetchSearchResults();
     }
+
+    return () => {
+      ignore = true;
+    };
   }, [decodedSearchTerm]);
 
   return (
