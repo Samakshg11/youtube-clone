@@ -56,7 +56,7 @@ export default function Feed() {
         }
       } catch (err) {
         if (requestId === requestIdRef.current) {
-          setError(err.message || "Unable to load video");
+          setError(err.message || "Unable to load videos.");
         }
       } finally {
         if (requestId === requestIdRef.current) {
@@ -149,9 +149,10 @@ export default function Feed() {
               <button
                 type="button"
                 onClick={() => fetchVideos()}
+                disabled={loading || loadingMore}
                 className="rounded-full border border-red-200/50 bg-red-400/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-red-100 transition hover:bg-red-300/30"
               >
-                Retry
+                {loading || loadingMore ? "Retrying..." : "Retry"}
               </button>
             </div>
           )}
