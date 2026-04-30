@@ -161,7 +161,18 @@ export default function Feed() {
             </span>
           </div>
 
-          <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <p className="sr-only" role="status" aria-live="polite">
+            {loading
+              ? "Loading videos"
+              : loadingMore
+              ? "Loading more videos"
+              : `Showing ${videos.length} videos`}
+          </p>
+
+          <section
+            aria-busy={loading || loadingMore}
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          >
             {loading
               ? Array.from({ length: 8 }).map((_, i) => <Shimmer key={i} />)
               : videos.map((v) => <VideoCard key={v.id} video={v} />)}
@@ -187,7 +198,7 @@ export default function Feed() {
             </p>
           )}
 
-          <div ref={sentinelRef} className="h-4" />
+          <div ref={sentinelRef} aria-hidden="true" className="h-4" />
         </main>
       </div>
     </div>
