@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import VideoCard from "./VideoCard";
 import Shimmer from "./Shimmer";
 import SideBar from "./SideBar";
-import { searchVideos } from "../utils/youtube";
+import { dedupeVideosById, searchVideos } from "../utils/youtube";
 import { getCategoryById } from "../utils/categories";
 
 export default function Feed() {
@@ -43,7 +43,7 @@ export default function Feed() {
 
         if (requestId === requestIdRef.current) {
           setVideos((prev) =>
-            isFirstPage ? data.videos : [...prev, ...data.videos]
+            isFirstPage ? data.videos : dedupeVideosById([...prev, ...data.videos])
           );
           setPageToken(data.nextPageToken || "");
         }
