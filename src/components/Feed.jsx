@@ -21,6 +21,8 @@ export default function Feed() {
   const inflightTokenRef = useRef("");
   const requestIdRef = useRef(0);
   const categoryMeta = getCategoryById(selectedCategory);
+  const supportsIntersectionObserver =
+    typeof window !== "undefined" && "IntersectionObserver" in window;
 
   const fetchVideos = useCallback(
     async (token = "") => {
@@ -74,7 +76,14 @@ export default function Feed() {
   }, [fetchVideos]);
 
   useEffect(() => {
-    if (!sentinelRef.current || !pageToken || !hasMore || loading || loadingMore) {
+    if (
+      !supportsIntersectionObserver ||
+      !sentinelRef.current ||
+      !pageToken ||
+      !hasMore ||
+      loading ||
+      loadingMore
+    ) {
       return;
     }
 
@@ -90,7 +99,7 @@ export default function Feed() {
 
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [fetchVideos, hasMore, loading, loadingMore, pageToken]);
+  }, [fetchVideos, hasMore, loading, loadingMore, pageToken, supportsIntersectionObserver]);
 
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 pb-8 text-white sm:px-4">
@@ -203,6 +212,19 @@ export default function Feed() {
             <p className="mt-8 text-center text-sm text-zinc-500">
               You have reached the end of this category.
             </p>
+          )}
+
+          {!loading && hasMore && !supportsIntersectionObserver && (
+            <div className="mt-8 flex justify-center">
+              <button
+                type="button"
+                onClick={() => fetchVideos(pageToken)}
+                disabled={loadingMore}
+                className="rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-medium text-zinc-100 transition hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {loadingMore ? "Loading..." : "Load more"}
+              </button>
+            </div>
           )}
 
           <div ref={sentinelRef} aria-hidden="true" className="h-4" />
