@@ -56,9 +56,20 @@ export async function searchVideos({ query, pageToken = "", maxResults = 12 }) {
 
   const data = await response.json();
   return {
-    videos: (data.items || []).map(mapSearchItem).filter((v) => v.id),
+    videos: dedupeVideosById((data.items || []).map(mapSearchItem).filter((v) => v.id)),
     nextPageToken: data.nextPageToken || "",
   };
+}
+
+export function dedupeVideosById(videos) {
+  const seen = new Set();
+  return videos.filter((video) => {
+    if (!video?.id || seen.has(video.id)) {
+      return false;
+    }
+    seen.add(video.id);
+    return true;
+  });
 }
 
 export async function getVideoById(id) {
