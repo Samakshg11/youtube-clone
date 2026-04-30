@@ -1,17 +1,4 @@
-const categories = [
-  { id: "Trending", label: "Trending", blurb: "Big stories and viral drops" },
-  { id: "Music", label: "Music", blurb: "Live sessions and fresh tracks" },
-  { id: "Gaming", label: "Gaming", blurb: "Streams, clips, and launches" },
-  { id: "Movies", label: "Movies", blurb: "Trailers and scene breakdowns" },
-  { id: "News", label: "News", blurb: "Headlines, context, and updates" },
-  { id: "Sports", label: "Sports", blurb: "Highlights and match reactions" },
-  { id: "Education", label: "Education", blurb: "Learn something useful fast" },
-  {
-    id: "Technology",
-    label: "Technology",
-    blurb: "Builds, reviews, and future stuff",
-  },
-];
+import { CATEGORIES } from "../utils/categories";
 
 export default function SideBar({ selectedCategory, setSelectedCategory }) {
   return (
@@ -20,7 +7,7 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
         <div className="soft-panel sticky top-28 rounded-[30px] p-4">
           <p className="section-label px-3 pb-4">Explore</p>
           <nav aria-label="Video categories" className="space-y-2">
-            {categories.map((cat) => {
+            {CATEGORIES.map((cat) => {
               const isActive = selectedCategory === cat.id;
               return (
                 <button
@@ -51,7 +38,7 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
 
       <div className="md:hidden px-3 pb-3">
         <nav aria-label="Video categories" className="no-scrollbar flex gap-2 overflow-x-auto">
-          {categories.map((cat) => {
+          {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
               <button
