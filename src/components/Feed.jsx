@@ -14,11 +14,14 @@ export default function Feed() {
   const [selectedCategory, setSelectedCategory] = useState("Trending");
   const sentinelRef = useRef(null);
   const inflightTokenRef = useRef("");
+  const requestIdRef = useRef(0);
   const categoryMeta = getCategoryById(selectedCategory);
 
   const fetchVideos = useCallback(
     async (token = "") => {
       const isFirstPage = !token;
+      const requestId = requestIdRef.current + 1;
+      requestIdRef.current = requestId;
       if (!isFirstPage && inflightTokenRef.current === token) {
         return;
       }
@@ -38,16 +41,22 @@ export default function Feed() {
           maxResults: 12,
         });
 
-        setVideos((prev) =>
-          isFirstPage ? data.videos : [...prev, ...data.videos]
-        );
-        setPageToken(data.nextPageToken || "");
+        if (requestId === requestIdRef.current) {
+          setVideos((prev) =>
+            isFirstPage ? data.videos : [...prev, ...data.videos]
+          );
+          setPageToken(data.nextPageToken || "");
+        }
       } catch (err) {
-        setError(err.message || "Unable to load video");
+        if (requestId === requestIdRef.current) {
+          setError(err.message || "Unable to load video");
+        }
       } finally {
-        inflightTokenRef.current = "";
-        setLoading(false);
-        setLoadingMore(false);
+        if (requestId === requestIdRef.current) {
+          inflightTokenRef.current = "";
+          setLoading(false);
+          setLoadingMore(false);
+        }
       }
     },
     [selectedCategory]
