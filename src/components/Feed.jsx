@@ -3,6 +3,7 @@ import VideoCard from "./VideoCard";
 import Shimmer from "./Shimmer";
 import SideBar from "./SideBar";
 import { searchVideos } from "../utils/youtube";
+import { getCategoryById } from "../utils/categories";
 
 export default function Feed() {
   const [videos, setVideos] = useState([]);
@@ -13,6 +14,7 @@ export default function Feed() {
   const [selectedCategory, setSelectedCategory] = useState("Trending");
   const sentinelRef = useRef(null);
   const inflightTokenRef = useRef("");
+  const categoryMeta = getCategoryById(selectedCategory);
 
   const fetchVideos = useCallback(
     async (token = "") => {
@@ -89,11 +91,12 @@ export default function Feed() {
             <div className="relative mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-2xl">
                 <h2 className="text-2xl font-semibold tracking-tight sm:text-4xl title-gradient">
-                  {selectedCategory} Videos
+                  {categoryMeta.label} Videos
                 </h2>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-300 sm:text-base">
-                  Curated scroll-worthy picks with a cleaner layout, calmer spacing,
-                  and quicker access to what you want to watch next.
+                  {categoryMeta.blurb}. Curated scroll-worthy picks with a cleaner
+                  layout, calmer spacing, and quicker access to what you want to
+                  watch next.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
@@ -114,7 +117,7 @@ export default function Feed() {
             </div>
             <div className="soft-panel rounded-2xl p-4">
               <p className="section-label">Category</p>
-              <p className="mt-2 text-base font-semibold text-white">{selectedCategory}</p>
+              <p className="mt-2 text-base font-semibold text-white">{categoryMeta.label}</p>
             </div>
             <div className="soft-panel rounded-2xl p-4">
               <p className="section-label">Status</p>
