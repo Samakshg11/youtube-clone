@@ -10,6 +10,7 @@ export default function Feed() {
   const [pageToken, setPageToken] = useState("");
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Trending");
   const sentinelRef = useRef(null);
@@ -45,7 +46,9 @@ export default function Feed() {
           setVideos((prev) =>
             isFirstPage ? data.videos : dedupeVideosById([...prev, ...data.videos])
           );
-          setPageToken(data.nextPageToken || "");
+          const nextToken = data.nextPageToken || "";
+          setPageToken(nextToken);
+          setHasMore(Boolean(nextToken));
         }
       } catch (err) {
         if (requestId === requestIdRef.current) {
@@ -67,7 +70,7 @@ export default function Feed() {
   }, [fetchVideos]);
 
   useEffect(() => {
-    if (!sentinelRef.current || !pageToken || loading || loadingMore) {
+    if (!sentinelRef.current || !pageToken || !hasMore || loading || loadingMore) {
       return;
     }
 
@@ -83,7 +86,7 @@ export default function Feed() {
 
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
-  }, [fetchVideos, loading, loadingMore, pageToken]);
+  }, [fetchVideos, hasMore, loading, loadingMore, pageToken]);
 
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 pb-8 text-white sm:px-4">
@@ -176,6 +179,12 @@ export default function Feed() {
                 Try another category to pull in a different mix of videos.
               </p>
             </div>
+          )}
+
+          {!loading && videos.length > 0 && !hasMore && (
+            <p className="mt-8 text-center text-sm text-zinc-500">
+              You have reached the end of this category.
+            </p>
           )}
 
           <div ref={sentinelRef} className="h-4" />
