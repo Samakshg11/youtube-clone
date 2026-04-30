@@ -5,6 +5,10 @@ import SideBar from "./SideBar";
 import { dedupeVideosById, searchVideos } from "../utils/youtube";
 import { getCategoryById } from "../utils/categories";
 
+const INITIAL_SHIMMER_COUNT = 8;
+const PAGINATION_SHIMMER_COUNT = 4;
+const PAGE_SIZE = 12;
+
 export default function Feed() {
   const [videos, setVideos] = useState([]);
   const [pageToken, setPageToken] = useState("");
@@ -39,7 +43,7 @@ export default function Feed() {
         const data = await searchVideos({
           query: selectedCategory,
           pageToken: token,
-          maxResults: 12,
+          maxResults: PAGE_SIZE,
         });
 
         if (requestId === requestIdRef.current) {
@@ -174,11 +178,13 @@ export default function Feed() {
             className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {loading
-              ? Array.from({ length: 8 }).map((_, i) => <Shimmer key={i} />)
+              ? Array.from({ length: INITIAL_SHIMMER_COUNT }).map((_, i) => (
+                  <Shimmer key={i} />
+                ))
               : videos.map((v) => <VideoCard key={v.id} video={v} />)}
 
             {loadingMore &&
-              Array.from({ length: 4 }).map((_, i) => (
+              Array.from({ length: PAGINATION_SHIMMER_COUNT }).map((_, i) => (
                 <Shimmer key={`more-${i}`} />
               ))}
           </section>
