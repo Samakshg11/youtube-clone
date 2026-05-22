@@ -6,6 +6,13 @@ export default function History() {
   const [history, setHistory] = useState(() => getHistory());
 
   function handleClearHistory() {
+    const confirmed = window.confirm(
+      "Clear your full watch history? This action cannot be undone."
+    );
+    if (!confirmed) {
+      return;
+    }
+
     clearHistory();
     setHistory([]);
   }
