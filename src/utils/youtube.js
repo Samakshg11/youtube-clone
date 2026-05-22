@@ -26,10 +26,18 @@ export function mapSearchItem(item) {
 }
 
 export async function searchVideos({ query, pageToken = "", maxResults = 12 }) {
+  const normalizedQuery = (query || "").trim();
+  if (!normalizedQuery) {
+    return {
+      videos: [],
+      nextPageToken: "",
+    };
+  }
+
   assertApiKey();
   const params = new URLSearchParams({
     part: "snippet",
-    q: query,
+    q: normalizedQuery,
     type: "video",
     maxResults: String(maxResults),
     key: API_KEY,
