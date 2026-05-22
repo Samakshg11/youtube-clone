@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const canSubmit = searchTerm.trim().length > 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,7 +53,8 @@ export default function Navbar() {
           <button
             type="submit"
             aria-label="Run search"
-            className="border-l border-white/15 bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110"
+            disabled={!canSubmit}
+            className="border-l border-white/15 bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Search
           </button>
