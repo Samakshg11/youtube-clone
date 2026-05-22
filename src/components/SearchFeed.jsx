@@ -82,8 +82,27 @@ export default function SearchFeed() {
         )}
 
         {error && (
-          <div className="mb-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200">
-            {error}
+          <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm text-red-200">
+            <span>{error}</span>
+            <button
+              type="button"
+              onClick={() => {
+                if (!loading) {
+                  setLoading(true);
+                  setError("");
+                  searchVideos({ query: decodedSearchTerm, maxResults: 24 })
+                    .then((data) => setVideos(data.videos))
+                    .catch((err) =>
+                      setError(err.message || "Failed to load search results.")
+                    )
+                    .finally(() => setLoading(false));
+                }
+              }}
+              disabled={loading}
+              className="rounded-full border border-red-200/50 bg-red-400/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-red-100 transition hover:bg-red-300/30 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? "Retrying..." : "Retry"}
+            </button>
           </div>
         )}
 
