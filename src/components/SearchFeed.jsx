@@ -117,6 +117,14 @@ export default function SearchFeed() {
           </div>
         )}
 
+        <p className="sr-only" role="status" aria-live="polite">
+          {loading
+            ? "Loading search results"
+            : error
+            ? "Search failed to load"
+            : `${videos.length} search results loaded`}
+        </p>
+
         <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {loading
             ? Array.from({ length: 8 }).map((_, i) => <Shimmer key={i} />)
