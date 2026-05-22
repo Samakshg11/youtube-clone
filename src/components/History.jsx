@@ -54,7 +54,10 @@ export default function History() {
             <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-400">
               Recently watched
             </h3>
-            <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-zinc-300">
+            <span
+              aria-live="polite"
+              className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-zinc-300"
+            >
               {history.length} saved
             </span>
           </div>
