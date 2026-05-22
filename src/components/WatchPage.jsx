@@ -11,6 +11,13 @@ export default function WatchPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!id) {
+      setVideo(null);
+      setError("Missing video id.");
+      setLoading(false);
+      return;
+    }
+
     let ignore = false;
 
     async function fetchVideoDetails() {
