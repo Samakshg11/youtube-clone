@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { saveToHistory } from "../utils/history";
-import { formatPublishedDate } from "../utils/formatters";
+import { formatPublishedDate, formatViewCount } from "../utils/formatters";
 import { getVideoById } from "../utils/youtube";
 
 export default function WatchPage() {
@@ -84,7 +84,7 @@ export default function WatchPage() {
                 <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
                   <p className="section-label">Views</p>
                   <p className="mt-2 text-lg font-semibold text-white">
-                    {Number(video.views).toLocaleString()}
+                    {formatViewCount(video.views)}
                   </p>
                 </div>
               )}
