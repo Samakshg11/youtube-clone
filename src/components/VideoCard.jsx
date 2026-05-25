@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { formatPublishedDate } from "../utils/formatters";
+import { formatPublishedDate, formatRelativeDate } from "../utils/formatters";
 
 export default function VideoCard({ video }) {
   const publishDate = formatPublishedDate(video.publishedAt);
+  const relativePublishDate = formatRelativeDate(video.publishedAt);
   const watchLink = video?.id ? `/watch/${video.id}` : "#";
   const thumbnail = video?.thumbnail || "https://placehold.co/640x360?text=No+Thumbnail";
   const title = video?.title || "Untitled video";
@@ -41,7 +42,9 @@ export default function VideoCard({ video }) {
               {channel}
             </p>
             {publishDate && (
-              <p className="shrink-0 pt-1 text-[11px] text-zinc-500">{publishDate}</p>
+              <p className="shrink-0 pt-1 text-[11px] text-zinc-500" title={publishDate}>
+                {relativePublishDate || publishDate}
+              </p>
             )}
           </div>
           <h3 className="min-h-12 text-base font-semibold leading-6 text-white/95">
