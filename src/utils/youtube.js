@@ -5,7 +5,7 @@ const API_KEY =
 function assertApiKey() {
   if (!API_KEY) {
     throw new Error(
-      "Missing YouTube API key. Set VITE_YOUTUBE_API_KEY in your .env file."
+      "Missing YouTube API key. Set VITE_YOUTUBE_API_KEY (or legacy VITE_RAPID_API_KEY) in your .env file."
     );
   }
 }
