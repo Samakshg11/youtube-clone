@@ -30,6 +30,8 @@ npm install
 
 ```bash
 VITE_YOUTUBE_API_KEY=your_api_key_here
+# Optional legacy fallback supported by the app:
+# VITE_RAPID_API_KEY=your_api_key_here
 ```
 
 3. Run the dev server:
@@ -52,3 +54,4 @@ npm run preview
 - Search and feed requests use the YouTube Data API v3 `search` endpoint.
 - Watch page metadata uses the `videos` endpoint.
 - If the API key is missing or invalid, the UI surfaces the API error message.
+- If requests fail with quota/auth errors, verify the key is enabled for YouTube Data API v3.
