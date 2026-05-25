@@ -48,20 +48,28 @@ export default function WatchPage() {
     };
   }, [id]);
 
-  const embedUrl = `https://www.youtube.com/embed/${id}?autoplay=0&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`;
+  const embedUrl = id
+    ? `https://www.youtube.com/embed/${id}?autoplay=0&mute=0&controls=1&rel=0&modestbranding=1&playsinline=1`
+    : "";
 
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 py-3 text-white sm:px-4 md:px-6">
       <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[1.35fr_0.65fr]">
         <div>
           <div className="soft-panel hero-ring overflow-hidden rounded-[32px] bg-black">
-            <iframe
-              className="aspect-video w-full"
-              src={embedUrl}
-              title="YouTube player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+            {embedUrl ? (
+              <iframe
+                className="aspect-video w-full"
+                src={embedUrl}
+                title={video?.title || "YouTube player"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <div className="grid aspect-video place-items-center text-sm text-zinc-400">
+                Missing video id
+              </div>
+            )}
           </div>
 
           {loading && (
