@@ -49,6 +49,9 @@ export default function Navbar() {
             onChange={(e) => setSearchTerm(e.target.value)}
             autoComplete="off"
             enterKeyHint="search"
+            spellCheck={false}
+            autoCorrect="off"
+            autoCapitalize="none"
           />
           <button
             type="submit"
