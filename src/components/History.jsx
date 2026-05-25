@@ -32,7 +32,9 @@ export default function History() {
           </div>
           {history.length > 0 && (
             <button
+              type="button"
               onClick={handleClearHistory}
+              aria-label="Clear watch history"
               className="rounded-full border border-white/15 bg-white/6 px-4 py-3 text-sm text-zinc-100 transition hover:border-white/35 hover:bg-white/10"
             >
               Clear history
@@ -51,7 +53,7 @@ export default function History() {
 
         {history.length > 0 && (
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-400">
+            <h3 id="history-list-title" className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-400">
               Recently watched
             </h3>
             <span
@@ -63,7 +65,10 @@ export default function History() {
           </div>
         )}
 
-        <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section
+          aria-labelledby="history-list-title"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        >
           {history.map((v) => (
             <VideoCard key={v.id} video={v} />
           ))}
