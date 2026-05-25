@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import VideoCard from "./VideoCard";
 import Shimmer from "./Shimmer";
@@ -19,44 +19,32 @@ export default function SearchFeed() {
   const { searchTerm = "" } = useParams();
   const decodedSearchTerm = safeDecodeSearchTerm(searchTerm);
 
-  useEffect(() => {
-    let ignore = false;
-
-    async function fetchSearchResults() {
-      setLoading(true);
-      setError("");
-      try {
-        const data = await searchVideos({
-          query: decodedSearchTerm,
-          maxResults: 24,
-        });
-
-        if (!ignore) {
-          setVideos(data.videos);
-        }
-      } catch (error) {
-        if (!ignore) {
-          setError(error.message || "Failed to load search results.");
-        }
-      } finally {
-        if (!ignore) {
-          setLoading(false);
-        }
-      }
-    }
-
-    if (decodedSearchTerm) {
-      fetchSearchResults();
-    } else {
+  const fetchSearchResults = useCallback(async () => {
+    if (!decodedSearchTerm) {
       setVideos([]);
       setLoading(false);
       setError("");
+      return;
     }
 
-    return () => {
-      ignore = true;
-    };
+    setLoading(true);
+    setError("");
+    try {
+      const data = await searchVideos({
+        query: decodedSearchTerm,
+        maxResults: 24,
+      });
+      setVideos(data.videos);
+    } catch (nextError) {
+      setError(nextError.message || "Failed to load search results.");
+    } finally {
+      setLoading(false);
+    }
   }, [decodedSearchTerm]);
+
+  useEffect(() => {
+    fetchSearchResults();
+  }, [fetchSearchResults]);
 
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 py-3 text-white sm:px-4 md:px-6">
@@ -86,18 +74,7 @@ export default function SearchFeed() {
             <span>{error}</span>
             <button
               type="button"
-              onClick={() => {
-                if (!loading) {
-                  setLoading(true);
-                  setError("");
-                  searchVideos({ query: decodedSearchTerm, maxResults: 24 })
-                    .then((data) => setVideos(data.videos))
-                    .catch((err) =>
-                      setError(err.message || "Failed to load search results.")
-                    )
-                    .finally(() => setLoading(false));
-                }
-              }}
+              onClick={fetchSearchResults}
               disabled={loading}
               className="rounded-full border border-red-200/50 bg-red-400/20 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.12em] text-red-100 transition hover:bg-red-300/30 disabled:cursor-not-allowed disabled:opacity-60"
             >
