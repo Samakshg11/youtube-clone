@@ -9,7 +9,11 @@ function readHistory() {
     }
 
     const parsed = JSON.parse(storedValue);
-    return Array.isArray(parsed) ? parsed : [];
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed.filter((item) => item && typeof item.id === "string");
   } catch {
     return [];
   }
