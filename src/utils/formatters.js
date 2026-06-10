@@ -1,10 +1,15 @@
-export function formatPublishedDate(dateValue) {
+function parseDateValue(dateValue) {
   if (!dateValue) {
-    return "";
+    return null;
   }
 
   const date = new Date(dateValue);
-  if (Number.isNaN(date.getTime())) {
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+export function formatPublishedDate(dateValue) {
+  const date = parseDateValue(dateValue);
+  if (!date) {
     return "";
   }
 
@@ -16,12 +21,8 @@ export function formatPublishedDate(dateValue) {
 }
 
 export function formatRelativeDate(dateValue) {
-  if (!dateValue) {
-    return "";
-  }
-
-  const date = new Date(dateValue);
-  if (Number.isNaN(date.getTime())) {
+  const date = parseDateValue(dateValue);
+  if (!date) {
     return "";
   }
 
