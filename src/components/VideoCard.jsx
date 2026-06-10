@@ -4,7 +4,8 @@ import { formatPublishedDate, formatRelativeDate } from "../utils/formatters";
 export default function VideoCard({ video }) {
   const publishDate = formatPublishedDate(video.publishedAt);
   const relativePublishDate = formatRelativeDate(video.publishedAt);
-  const watchLink = video?.id ? `/watch/${video.id}` : "#";
+  const hasVideoId = Boolean(video?.id);
+  const watchLink = hasVideoId ? `/watch/${video.id}` : "#";
   const thumbnail = video?.thumbnail || "https://placehold.co/640x360?text=No+Thumbnail";
   const title = video?.title || "Untitled video";
   const channel = video?.channel || "Unknown channel";
@@ -12,16 +13,12 @@ export default function VideoCard({ video }) {
     video?.description ||
     "Open the video to watch details and start exploring more from this creator.";
 
+  const Wrapper = hasVideoId ? Link : "div";
+
   return (
-    <Link
-      to={watchLink}
-      aria-disabled={!video?.id}
+    <Wrapper
+      {...(hasVideoId ? { to: watchLink } : { "aria-disabled": true })}
       className="group block"
-      onClick={(event) => {
-        if (!video?.id) {
-          event.preventDefault();
-        }
-      }}
     >
       <article className="soft-panel overflow-hidden rounded-[28px] transition duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_22px_45px_rgba(0,0,0,0.38)]">
         <div className="relative overflow-hidden">
@@ -55,6 +52,6 @@ export default function VideoCard({ video }) {
           </p>
         </div>
       </article>
-    </Link>
+    </Wrapper>
   );
 }
