@@ -13,14 +13,14 @@ export default function App() {
         <div className="app-shell__glow app-shell__glow--right" />
         <div className="app-shell__grid" />
         <Navbar />
-        <div className="relative z-10">
+        <main className="relative z-10">
           <Routes>
             <Route path="/" element={<Feed />} />
             <Route path="/search/:searchTerm" element={<SearchFeed />} />
             <Route path="/watch/:id" element={<WatchPage />} />
             <Route path="/history" element={<History />} />
           </Routes>
-        </div>
+        </main>
       </div>
     </BrowserRouter>
   );
