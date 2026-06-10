@@ -20,6 +20,19 @@
   box-sizing: border-box;
 }
 
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
 }
