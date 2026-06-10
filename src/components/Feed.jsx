@@ -9,6 +9,18 @@ const INITIAL_SHIMMER_COUNT = 8;
 const PAGINATION_SHIMMER_COUNT = 4;
 const PAGE_SIZE = 12;
 
+function getFeedStatusMessage({ loading, loadingMore, count }) {
+  if (loading) {
+    return "Loading videos";
+  }
+
+  if (loadingMore) {
+    return "Loading more videos";
+  }
+
+  return `Showing ${count} videos`;
+}
+
 export default function Feed() {
   const [videos, setVideos] = useState([]);
   const [pageToken, setPageToken] = useState("");
@@ -20,6 +32,7 @@ export default function Feed() {
   const sentinelRef = useRef(null);
   const inflightTokenRef = useRef("");
   const requestIdRef = useRef(0);
+  const statusMessage = getFeedStatusMessage({ loading, loadingMore, count: videos.length });
   const categoryMeta = getCategoryById(selectedCategory);
   const supportsIntersectionObserver =
     typeof window !== "undefined" && "IntersectionObserver" in window;
@@ -176,11 +189,7 @@ export default function Feed() {
           </div>
 
           <p className="sr-only" role="status" aria-live="polite">
-            {loading
-              ? "Loading videos"
-              : loadingMore
-              ? "Loading more videos"
-              : `Showing ${videos.length} videos`}
+            {statusMessage}
           </p>
 
           <section
