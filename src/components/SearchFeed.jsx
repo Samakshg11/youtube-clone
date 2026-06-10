@@ -4,6 +4,8 @@ import VideoCard from "./VideoCard";
 import Shimmer from "./Shimmer";
 import { searchVideos } from "../utils/youtube";
 
+const SHIMMER_COUNT = 8;
+
 function safeDecodeSearchTerm(value) {
   try {
     return decodeURIComponent(value);
@@ -104,7 +106,7 @@ export default function SearchFeed() {
 
         <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {loading
-            ? Array.from({ length: 8 }).map((_, i) => <Shimmer key={i} />)
+            ? Array.from({ length: SHIMMER_COUNT }).map((_, i) => <Shimmer key={i} />)
             : videos.map((v) => <VideoCard key={v.id} video={v} />)}
         </section>
 
