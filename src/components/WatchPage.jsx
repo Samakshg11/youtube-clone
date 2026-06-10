@@ -9,6 +9,7 @@ export default function WatchPage() {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const playerTitle = video?.title || "YouTube player";
 
   useEffect(() => {
     if (!id) {
@@ -61,10 +62,10 @@ export default function WatchPage() {
               <iframe
                 className="aspect-video w-full"
                 src={embedUrl}
-                title={video?.title || "YouTube player"}
+                title={playerTitle}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
-              ></iframe>
+              />
             ) : (
               <div className="grid aspect-video place-items-center text-sm text-zinc-400">
                 Missing video id
