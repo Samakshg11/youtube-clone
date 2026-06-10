@@ -1,6 +1,10 @@
 const HISTORY_KEY = "yt_history";
 const HISTORY_LIMIT = 50;
 
+function isHistoryEntry(item) {
+  return Boolean(item && typeof item === "object" && typeof item.id === "string");
+}
+
 function readHistory() {
   try {
     const storedValue = localStorage.getItem(HISTORY_KEY);
@@ -13,7 +17,7 @@ function readHistory() {
       return [];
     }
 
-    return parsed.filter((item) => item && typeof item.id === "string");
+    return parsed.filter(isHistoryEntry);
   } catch {
     return [];
   }
