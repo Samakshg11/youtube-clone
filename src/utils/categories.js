@@ -1,4 +1,4 @@
-export const CATEGORIES = [
+export const CATEGORIES = Object.freeze([
   { id: "Trending", label: "Trending", blurb: "Big stories and viral drops" },
   { id: "Music", label: "Music", blurb: "Live sessions and fresh tracks" },
   { id: "Gaming", label: "Gaming", blurb: "Streams, clips, and launches" },
@@ -11,7 +11,7 @@ export const CATEGORIES = [
     label: "Technology",
     blurb: "Builds, reviews, and future stuff",
   },
-];
+]);
 
 export function getCategoryById(id) {
   return CATEGORIES.find((category) => category.id === id) || CATEGORIES[0];
