@@ -57,6 +57,8 @@ export default function Navbar() {
             type="submit"
             aria-label="Run search"
             disabled={!canSubmit}
+            aria-disabled={!canSubmit}
+            title={canSubmit ? "Search" : "Enter a query to search"}
             className="border-l border-white/15 bg-gradient-to-r from-[#ff5a4f] to-[#ff7d2b] px-4 py-3 text-sm font-semibold text-white transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
           >
             Search
