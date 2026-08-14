@@ -30,6 +30,10 @@ export function formatRelativeDate(dateValue) {
   const diffMs = date.getTime() - Date.now();
   const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
 
+  if (diffDays === 0) {
+    return formatter.format(0, "day");
+  }
+
   if (Math.abs(diffDays) < 30) {
     return formatter.format(diffDays, "day");
   }
