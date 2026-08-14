@@ -49,6 +49,21 @@ npm run build
 npm run preview
 ```
 
+## Scripts
+
+A few helpful npm scripts you can run directly:
+
+```bash
+# start the dev server (shorthand)
+npm start
+
+# run the dev server
+npm run dev
+
+# run the production preview
+npm run preview
+```
+
 ## Notes
 
 - Search and feed requests use the YouTube Data API v3 `search` endpoint.
