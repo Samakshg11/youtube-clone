@@ -1,6 +1,6 @@
 export default function Shimmer() {
   return (
-    <div className="soft-panel animate-pulse overflow-hidden rounded-[28px]">
+    <div role="status" aria-label="Loading" className="soft-panel animate-pulse overflow-hidden rounded-[28px]">
       <div className="aspect-video w-full bg-zinc-800/80"></div>
       <div className="space-y-3 p-5">
         <div className="h-5 w-4/12 rounded-full bg-zinc-800/80"></div>
