@@ -138,7 +138,10 @@ export default function Feed() {
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">
-                <span className="rounded-full border border-white/15 bg-black/25 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-200">
+                <span
+                  className="rounded-full border border-white/15 bg-black/25 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-200"
+                  aria-label={`${videos.length} videos loaded`}
+                >
                   {videos.length} loaded
                 </span>
                 <span className="rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-medium text-zinc-300">
