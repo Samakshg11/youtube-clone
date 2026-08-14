@@ -17,14 +17,14 @@ export default function VideoCard({ video }) {
 
   return (
     <Wrapper
-      {...(hasVideoId ? { to: watchLink } : { "aria-disabled": true })}
+      {...(hasVideoId ? { to: watchLink } : { "aria-disabled": true, tabIndex: -1 })}
       className="group block"
     >
       <article className="soft-panel overflow-hidden rounded-[28px] transition duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_22px_45px_rgba(0,0,0,0.38)]">
         <div className="relative overflow-hidden">
           <img
             src={thumbnail}
-            alt={title}
+            alt={`${title} thumbnail`}
             className="aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.06]"
             loading="lazy"
           />
