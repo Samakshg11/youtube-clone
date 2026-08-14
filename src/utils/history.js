@@ -1,13 +1,23 @@
 const HISTORY_KEY = "yt_history";
 const HISTORY_LIMIT = 50;
 
+function hasLocalStorage() {
+  try {
+    return typeof window !== "undefined" && !!window.localStorage;
+  } catch {
+    return false;
+  }
+}
+
 function isHistoryEntry(item) {
   return Boolean(item && typeof item === "object" && typeof item.id === "string");
 }
 
 function readHistory() {
+  if (!hasLocalStorage()) return [];
+
   try {
-    const storedValue = localStorage.getItem(HISTORY_KEY);
+    const storedValue = window.localStorage.getItem(HISTORY_KEY);
     if (!storedValue) {
       return [];
     }
@@ -24,6 +34,8 @@ function readHistory() {
 }
 
 export function saveToHistory(video) {
+  if (!hasLocalStorage()) return;
+
   const history = readHistory();
   if (!video?.id) {
     return;
@@ -32,7 +44,9 @@ export function saveToHistory(video) {
   const filtered = history.filter((v) => v.id !== video.id);
   const nextHistory = [video, ...filtered].slice(0, HISTORY_LIMIT);
 
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(nextHistory));
+  try {
+    window.localStorage.setItem(HISTORY_KEY, JSON.stringify(nextHistory));
+  } catch {}
 }
 
 export function getHistory() {
@@ -40,5 +54,9 @@ export function getHistory() {
 }
 
 export function clearHistory() {
-  localStorage.removeItem(HISTORY_KEY);
+  if (!hasLocalStorage()) return;
+
+  try {
+    window.localStorage.removeItem(HISTORY_KEY);
+  } catch {}
 }
