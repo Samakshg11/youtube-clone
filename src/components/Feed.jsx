@@ -123,49 +123,13 @@ export default function Feed() {
         />
 
         <main className="flex-1 px-1 pb-6 sm:px-2 md:px-6">
-          <div className="soft-panel hero-ring mb-5 overflow-hidden rounded-[32px] p-5 sm:p-7">
-            <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.15),transparent_58%)] lg:block" />
-            <p className="section-label">Discover</p>
-            <div className="relative mt-3 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-              <div className="max-w-2xl">
-                <h2 className="text-2xl font-semibold tracking-tight sm:text-4xl title-gradient">
-                  {categoryMeta.label} Videos
-                </h2>
-                <p className="mt-3 max-w-xl text-sm leading-6 text-zinc-300 sm:text-base">
-                  {categoryMeta.blurb}. Curated scroll-worthy picks with a cleaner
-                  layout, calmer spacing, and quicker access to what you want to
-                  watch next.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <span
-                  className="rounded-full border border-white/15 bg-black/25 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-200"
-                  aria-label={`${videos.length} videos loaded`}
-                >
-                  {videos.length} loaded
-                </span>
-                <span className="rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-medium text-zinc-300">
-                  Infinite scroll ready
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-5 grid gap-3 sm:grid-cols-3">
-            <div className="soft-panel rounded-2xl p-4">
-              <p className="section-label">Mood</p>
-              <p className="mt-2 text-base font-semibold text-white">Focused browsing</p>
-            </div>
-            <div className="soft-panel rounded-2xl p-4">
-              <p className="section-label">Category</p>
-              <p className="mt-2 text-base font-semibold text-white">{categoryMeta.label}</p>
-            </div>
-            <div className="soft-panel rounded-2xl p-4">
-              <p className="section-label">Status</p>
-              <p className="mt-2 text-base font-semibold text-white">
-                {loading ? "Loading feed" : "Ready to explore"}
-              </p>
-            </div>
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold tracking-tight text-white">
+              {categoryMeta.label} Videos
+            </h1>
+            <p className="mt-2 text-sm text-zinc-400">
+              {categoryMeta.blurb}
+            </p>
           </div>
 
           {error && (
@@ -182,12 +146,12 @@ export default function Feed() {
             </div>
           )}
 
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-400">
-              Fresh picks
-            </h3>
-            <span className="text-xs text-zinc-500">
-              Scroll to load more
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-white">
+              {loading ? "Loading..." : `${videos.length} Videos`}
+            </h2>
+            <span className="text-sm text-zinc-400">
+              {loading ? "" : `Scroll to load more`}
             </span>
           </div>
 
@@ -197,7 +161,7 @@ export default function Feed() {
 
           <section
             aria-busy={loading || loadingMore}
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {loading
               ? Array.from({ length: INITIAL_SHIMMER_COUNT }).map((_, i) => (
@@ -212,17 +176,17 @@ export default function Feed() {
           </section>
 
           {!loading && !videos.length && !error && (
-            <div className="soft-panel mt-8 rounded-3xl p-8 text-center">
-              <p className="text-lg font-semibold text-white">Nothing surfaced yet</p>
+            <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
+              <p className="text-lg font-semibold text-white">No videos found</p>
               <p className="mt-2 text-sm text-zinc-400">
-                Try another category to pull in a different mix of videos.
+                Try another category or search for something else.
               </p>
             </div>
           )}
 
           {!loading && videos.length > 0 && !hasMore && (
             <p className="mt-8 text-center text-sm text-zinc-500">
-              You have reached the end of this category.
+              You've reached the end of this category.
             </p>
           )}
 

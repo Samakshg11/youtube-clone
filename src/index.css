@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: dark;
+  --color-scheme: dark;
   --bg-main: #04050a;
   --bg-soft: #0e1220;
   --bg-elevated: rgba(12, 16, 28, 0.82);
@@ -11,9 +11,53 @@
   --stroke: rgba(255, 255, 255, 0.14);
   --stroke-strong: rgba(255, 255, 255, 0.22);
   --text-soft: #acb0bd;
+  --text-primary: #fff;
+  --text-secondary: #333;
   --accent: #ff5a4f;
   --accent-secondary: #fbbf24;
   --accent-tertiary: #38bdf8;
+  --accent-quaternary: #00a1d0;
+  --accent-quinary: #000;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --transition: all 0.3s ease;
+}
+
+[data-theme="light"] {
+  --bg-main: #f9f9f9;
+  --bg-soft: #f0f0f0;
+  --bg-elevated: #fff;
+  --surface: rgba(0, 0, 0, 0.07);
+  --surface-strong: rgba(0, 0, 0, 0.12);
+  --stroke: rgba(0, 0, 0, 0.14);
+  --stroke-strong: rgba(0, 0, 0, 0.22);
+  --text-soft: #666;
+  --text-primary: #000;
+  --text-secondary: #333;
+  --accent: #ff5a4f;
+  --accent-secondary: #fbbf24;
+  --accent-tertiary: #38bdf8;
+  --accent-quaternary: #00a1d0;
+  --accent-quinary: #000;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --bg-main: #04050a;
+  --bg-soft: #0e1220;
+  --bg-elevated: rgba(12, 16, 28, 0.82);
+  --surface: rgba(255, 255, 255, 0.07);
+  --surface-strong: rgba(255, 255, 255, 0.12);
+  --stroke: rgba(255, 255, 255, 0.14);
+  --stroke-strong: rgba(255, 255, 255, 0.22);
+  --text-soft: #acb0bd;
+  --text-primary: #fff;
+  --text-secondary: #333;
+  --accent: #ff5a4f;
+  --accent-secondary: #fbbf24;
+  --accent-tertiary: #38bdf8;
+  --accent-quaternary: #00a1d0;
+  --accent-quinary: #000;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -41,13 +85,15 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: "Space Grotesk", "Segoe UI", sans-serif;
-  background:
-    radial-gradient(circle at 10% -5%, rgba(255, 90, 79, 0.24), transparent 36%),
-    radial-gradient(circle at 88% 18%, rgba(251, 191, 36, 0.15), transparent 34%),
-    radial-gradient(circle at 30% 100%, rgba(56, 189, 248, 0.15), transparent 44%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 22%),
-    var(--bg-main);
-  color: #fff;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  transition: var(--transition);
+}
+
+body[data-theme="light"] {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  background-color: #f9f9f9 !important;
 }
 
 #root {

@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 export default function Navbar() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [theme, setTheme] = useState("dark");
   const navigate = useNavigate();
   const canSubmit = searchTerm.trim().length > 0;
+
+  useEffect(() => {
+    // Load theme from localStorage or default to dark
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,12 +80,22 @@ export default function Navbar() {
           </button>
         </form>
 
-        <Link
-          to="/history"
-          className="shrink-0 rounded-full border border-white/15 bg-white/6 px-4 py-3 text-sm font-medium text-zinc-100 transition hover:border-white/35 hover:bg-white/10"
-        >
-          History
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={toggleTheme}
+            className="rounded-full border border-white/15 bg-white/6 p-2 text-sm text-zinc-100 transition hover:border-white/35 hover:bg-white/10"
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? "🌞" : "🌙"}
+          </button>
+
+          <Link
+            to="/history"
+            className="shrink-0 rounded-full border border-white/15 bg-white/6 px-4 py-3 text-sm font-medium text-zinc-100 transition hover:border-white/35 hover:bg-white/10"
+          >
+            History
+          </Link>
+        </div>
       </div>
     </nav>
   );

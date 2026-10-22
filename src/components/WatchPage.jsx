@@ -4,6 +4,36 @@ import { saveToHistory } from "../utils/history";
 import { formatPublishedDate, formatViewCount } from "../utils/formatters";
 import { getVideoById } from "../utils/youtube";
 
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { saveToHistory } from "../utils/history";
+import { formatPublishedDate, formatViewCount } from "../utils/formatters";
+import { getVideoById } from "../utils/youtube";
+
+const VideoMetadata = ({ label, value }) => (
+  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+      {label}
+    </p>
+    <p className="mt-2 text-lg font-semibold text-white">{value}</p>
+  </div>
+);
+
+const ActionButton = ({ icon, label, active, onClick, copied }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
+      active
+        ? "border-red-400/50 bg-red-500/20 text-red-200"
+        : "border-white/15 bg-white/5 text-zinc-200 hover:border-white/35 hover:bg-white/10"
+    }`}
+  >
+    <span>{icon}</span>
+    <span>{copied ? "Link Copied!" : label}</span>
+  </button>
+);
+
 export default function WatchPage() {
   const { id } = useParams();
   const [video, setVideo] = useState(null);
@@ -67,24 +97,40 @@ export default function WatchPage() {
     <div className="min-h-[calc(100vh-74px)] px-3 py-3 text-white sm:px-4 md:px-6">
       <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[1.35fr_0.65fr]">
         <div>
-          <div className="soft-panel hero-ring overflow-hidden rounded-[32px] bg-black">
+          <div className="overflow-hidden rounded-2xl border border-white/10 bg-black">
             {embedUrl ? (
               <iframe
-                className="aspect-video w-full"
+                className="aspect-video w-full rounded-t-2xl"
                 src={embedUrl}
                 title={playerTitle}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
             ) : (
-              <div className="grid aspect-video place-items-center text-sm text-zinc-400">
+              <div className="grid aspect-video place-items-center rounded-t-2xl text-sm text-zinc-400">
                 Missing video id
               </div>
             )}
+
+            <div className="rounded-b-2xl border-t border-white/10 bg-white/5 p-4">
+              <div className="flex items-center gap-3">
+                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#ff5a4f] to-[#fbbf24] text-sm font-bold text-white">
+                  {video?.channel?.charAt(0) || "?"}
+                </div>
+                <div>
+                  <h1 className="text-lg font-semibold text-white">
+                    {video?.title || "Loading video..."}
+                  </h1>
+                  <p className="text-sm text-zinc-400">
+                    {video?.channel || ""}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {loading && (
-            <div className="soft-panel mt-4 rounded-2xl p-4 text-sm text-zinc-400">
+            <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-zinc-400">
               Loading video details...
             </div>
           )}
@@ -97,60 +143,54 @@ export default function WatchPage() {
         </div>
 
         {!loading && video && (
-          <section className="soft-panel hero-ring h-fit rounded-[32px] p-5 lg:sticky lg:top-28">
-            <p className="section-label">Now Playing</p>
-            <h1 className="mt-3 text-xl font-semibold leading-8 sm:text-3xl">
-              {video.title}
-            </h1>
-            <p className="mt-4 text-sm font-medium uppercase tracking-[0.12em] text-zinc-300">
-              {video.channel}
-            </p>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+          <section className="h-fit">
+            <div className="grid gap-3 sm:grid-cols-2">
               {video.views && (
-                <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
-                  <p className="section-label">Views</p>
-                  <p className="mt-2 text-lg font-semibold text-white">
-                    {formatViewCount(video.views)}
-                  </p>
-                </div>
+                <VideoMetadata label="Views" value={formatViewCount(video.views)} />
               )}
               {video.publishedAt && (
-                <div className="rounded-2xl border border-white/10 bg-white/6 p-4">
-                  <p className="section-label">Published</p>
-                  <p className="mt-2 text-lg font-semibold text-white">
-                    {formatPublishedDate(video.publishedAt)}
-                  </p>
-                </div>
+                <VideoMetadata
+                  label="Published"
+                  value={formatPublishedDate(video.publishedAt)}
+                />
               )}
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                type="button"
+              <ActionButton
+                icon={liked ? "❤️" : "🤍"}
+                label={liked ? "Liked" : "Like"}
+                active={liked}
                 onClick={() => setLiked((prev) => !prev)}
-                className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                  liked
-                    ? "border-red-400/50 bg-red-500/20 text-red-200"
-                    : "border-white/15 bg-white/6 text-zinc-200 hover:border-white/35 hover:bg-white/10"
-                }`}
-              >
-                <span>{liked ? "❤️" : "🤍"}</span>
-                <span>{liked ? "Liked" : "Like"}</span>
-              </button>
-              <button
-                type="button"
+              />
+              <ActionButton
+                icon="🔗"
+                label={copied ? "Link Copied!" : "Share"}
                 onClick={handleShare}
-                className="flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:border-white/35 hover:bg-white/10"
-              >
-                <span>🔗</span>
-                <span>{copied ? "Link Copied!" : "Share"}</span>
-              </button>
+                copied={copied}
+              />
             </div>
+
             {video.description && (
-              <p className="mt-5 max-h-72 overflow-auto rounded-2xl border border-white/10 bg-black/20 p-4 pr-3 text-sm leading-7 text-zinc-300">
-                {video.description}
-              </p>
+              <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
+                  Description
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-zinc-300">
+                  {video.description}
+                </p>
+              </div>
             )}
+
+            <div className="mt-5 flex justify-between">
+              <Link
+                to="/"
+                className="flex items-center gap-2 text-sm text-zinc-400 transition hover:text-white"
+              >
+                <span>←</span>
+                <span>Back to feed</span>
+              </Link>
+            </div>
           </section>
         )}
       </div>

@@ -20,36 +20,41 @@ export default function VideoCard({ video }) {
       {...(hasVideoId ? { to: watchLink } : { "aria-disabled": true, tabIndex: -1 })}
       className="group block"
     >
-      <article className="soft-panel overflow-hidden rounded-[28px] transition duration-300 hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_22px_45px_rgba(0,0,0,0.38)]">
-        <div className="relative overflow-hidden">
+      <article className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-lg hover:shadow-black/20">
+        <div className="relative aspect-video w-full overflow-hidden">
           <img
             src={thumbnail}
             alt={`${title} thumbnail`}
-            className="aspect-video w-full object-cover transition duration-500 group-hover:scale-[1.06]"
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
             loading="lazy"
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent opacity-80"></div>
-          <div className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/45 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/90 backdrop-blur-sm">
-            Play now
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+          <div className="absolute bottom-2 right-2 rounded-md bg-black/80 px-2 py-1 text-xs font-semibold text-white">
+            Watch
           </div>
         </div>
-        <div className="p-4 sm:p-5">
-          <div className="mb-3 flex items-start justify-between gap-3">
-            <p className="rounded-full border border-white/10 bg-white/6 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-300">
-              {channel}
-            </p>
-            {publishDate && (
-              <p className="shrink-0 pt-1 text-[11px] text-zinc-500" title={publishDate}>
-                {relativePublishDate || publishDate}
+
+        <div className="p-4">
+          <div className="flex items-start gap-3">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-[#ff5a4f] to-[#fbbf24] text-xs font-bold text-white">
+              {channel.charAt(0)}
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-white/90 group-hover:text-white">
+                {title}
+              </h3>
+              <p className="mt-1 text-xs font-medium text-zinc-400">
+                {channel}
               </p>
-            )}
+              <div className="mt-1 flex items-center gap-2 text-xs text-zinc-500">
+                {publishDate && (
+                  <span title={publishDate}>
+                    {relativePublishDate || publishDate}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
-          <h3 className="min-h-12 text-base font-semibold leading-6 text-white/95">
-            {title}
-          </h3>
-          <p className="mt-3 line-clamp-2 text-sm leading-6 text-zinc-400">
-            {description}
-          </p>
         </div>
       </article>
     </Wrapper>

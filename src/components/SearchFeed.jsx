@@ -51,19 +51,17 @@ export default function SearchFeed() {
   return (
     <div className="min-h-[calc(100vh-74px)] px-3 py-3 text-white sm:px-4 md:px-6">
       <div className="mx-auto w-full max-w-[1600px]">
-        <section className="soft-panel hero-ring mb-5 rounded-[32px] p-5 sm:p-7">
-          <p className="section-label">Search</p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-tight sm:text-4xl title-gradient">
-            Results for "{decodedSearchTerm}"
-          </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-zinc-300 sm:text-base">
-            A tighter visual rhythm makes it easier to scan thumbnails, titles,
-            and channels without the page feeling crowded.
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold tracking-tight text-white">
+            Search Results for "{decodedSearchTerm}"
+          </h1>
+          <p className="mt-2 text-sm text-zinc-400">
+            Showing matching videos, channels, and playlists.
           </p>
-        </section>
+        </div>
 
         {!decodedSearchTerm && (
-          <div className="soft-panel mb-5 rounded-[28px] p-8 text-center">
+          <div className="mb-5 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
             <p className="text-lg font-semibold text-white">Start with a search</p>
             <p className="mt-2 text-sm text-zinc-400">
               Use the top search bar to find videos by topic, channel, or keyword.
@@ -87,10 +85,10 @@ export default function SearchFeed() {
 
         {!loading && !error && (
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-zinc-400">
+            <h2 className="text-lg font-semibold text-white">
               Matching videos
-            </h3>
-            <span className="rounded-full border border-white/10 bg-white/6 px-3 py-1 text-xs text-zinc-300">
+            </h2>
+            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
               {videos.length} results
             </span>
           </div>
@@ -104,14 +102,14 @@ export default function SearchFeed() {
             : `${videos.length} search results loaded`}
         </p>
 
-        <section className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {loading
             ? Array.from({ length: SHIMMER_COUNT }).map((_, i) => <Shimmer key={i} />)
             : videos.map((v) => <VideoCard key={v.id} video={v} />)}
         </section>
 
         {!loading && !videos.length && !error && (
-          <div className="soft-panel mt-8 rounded-3xl p-8 text-center">
+          <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
             <p className="text-lg font-semibold text-white">No videos found</p>
             <p className="mt-2 text-sm text-zinc-400">
               Try a broader keyword or another creator name.
