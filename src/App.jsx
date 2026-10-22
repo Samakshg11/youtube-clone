@@ -4,6 +4,7 @@ import WatchPage from "./components/WatchPage";
 import SearchFeed from "./components/SearchFeed";
 import Navbar from "./components/Navbar";
 import History from "./components/History";
+import Footer from "./components/Footer";
 
 export default function App() {
   return (
@@ -13,13 +14,14 @@ export default function App() {
         <div className="app-shell__glow app-shell__glow--right" />
         <div className="app-shell__grid" />
         <Navbar />
-        <main className="relative z-10">
+        <main className="relative z-10 flex flex-1 flex-col">
           <Routes>
             <Route path="/" element={<Feed />} />
             <Route path="/search/:searchTerm" element={<SearchFeed />} />
             <Route path="/watch/:id" element={<WatchPage />} />
             <Route path="/history" element={<History />} />
           </Routes>
+          <Footer />
         </main>
       </div>
     </BrowserRouter>

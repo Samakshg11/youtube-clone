@@ -46,7 +46,9 @@ export function saveToHistory(video) {
 
   try {
     window.localStorage.setItem(HISTORY_KEY, JSON.stringify(nextHistory));
-  } catch {}
+  } catch {
+    // localStorage may be unavailable in restricted contexts
+  }
 }
 
 export function getHistory() {
@@ -58,5 +60,7 @@ export function clearHistory() {
 
   try {
     window.localStorage.removeItem(HISTORY_KEY);
-  } catch {}
+  } catch {
+    // localStorage may be unavailable in restricted contexts
+  }
 }

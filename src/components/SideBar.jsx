@@ -34,7 +34,10 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
                   aria-current={isActive ? "true" : undefined}
                   className={getDesktopCategoryClass(isActive)}
                 >
-                  <span className="block text-sm font-semibold">{cat.label}</span>
+                  <span className="flex items-center gap-2 text-sm font-semibold">
+                    <span aria-hidden="true">{cat.icon}</span>
+                    {cat.label}
+                  </span>
                   <span
                     className={`mt-1 block text-xs ${
                       isActive ? "text-white/80" : "text-zinc-500"
@@ -62,6 +65,7 @@ export default function SideBar({ selectedCategory, setSelectedCategory }) {
                 aria-current={isActive ? "true" : undefined}
                 className={getMobileCategoryClass(isActive)}
               >
+                <span aria-hidden="true">{cat.icon}</span>
                 {cat.label}
               </button>
             );

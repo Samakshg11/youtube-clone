@@ -9,7 +9,17 @@ export default function WatchPage() {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [liked, setLiked] = useState(false);
+  const [copied, setCopied] = useState(false);
   const playerTitle = video?.title || "YouTube player";
+
+  function handleShare() {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
 
   useEffect(() => {
     if (!id) {
@@ -112,6 +122,29 @@ export default function WatchPage() {
                   </p>
                 </div>
               )}
+            </div>
+
+            <div className="mt-5 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => setLiked((prev) => !prev)}
+                className={`flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition ${
+                  liked
+                    ? "border-red-400/50 bg-red-500/20 text-red-200"
+                    : "border-white/15 bg-white/6 text-zinc-200 hover:border-white/35 hover:bg-white/10"
+                }`}
+              >
+                <span>{liked ? "❤️" : "🤍"}</span>
+                <span>{liked ? "Liked" : "Like"}</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex items-center gap-2 rounded-full border border-white/15 bg-white/6 px-4 py-2 text-sm font-semibold text-zinc-200 transition hover:border-white/35 hover:bg-white/10"
+              >
+                <span>🔗</span>
+                <span>{copied ? "Link Copied!" : "Share"}</span>
+              </button>
             </div>
             {video.description && (
               <p className="mt-5 max-h-72 overflow-auto rounded-2xl border border-white/10 bg-black/20 p-4 pr-3 text-sm leading-7 text-zinc-300">
