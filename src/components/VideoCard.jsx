@@ -9,10 +9,7 @@ export default function VideoCard({ video }) {
   const thumbnail = video?.thumbnail || "https://placehold.co/640x360?text=No+Thumbnail";
   const title = video?.title || "Untitled video";
   const channel = video?.channel || "Unknown channel";
-  const description =
-    video?.description ||
-    "Open the video to watch details and start exploring more from this creator.";
-
+  
   const Wrapper = hasVideoId ? Link : "div";
 
   return (

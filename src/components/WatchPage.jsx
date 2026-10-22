@@ -1,9 +1,3 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { saveToHistory } from "../utils/history";
-import { formatPublishedDate, formatViewCount } from "../utils/formatters";
-import { getVideoById } from "../utils/youtube";
-
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { saveToHistory } from "../utils/history";
